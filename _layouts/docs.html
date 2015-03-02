@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body>
+
+    <section class="content">
+      {% include header-{{ page.lang }}.html %}
+
+      {% include menu-{{ page.lang }}.html %}
+
+      <div id="overlay"></div>
+      <h1>{{ page.title }}</h1>
+
+      {{ content }}
+
+    </section>
+
+    {% include footer-{{ page.lang }}.html %}
+
+  </body>
+
+</html>

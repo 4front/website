@@ -1,0 +1,35 @@
+---
+layout: home
+title: 4front - Multi-tenant single page app container for Node.js and Express
+menu: home
+lang: en
+---
+<section id="home-content">
+	{% include header-{{ page.lang }}.html %}
+	<div id="overlay"></div>
+	<section id="description"><span class="description">Multi-tenant single page app container for <a href="http://nodejs.org">Node.js</a> and <a href="http://expressjs.com">Express</a>.</span>
+	</section>
+	<div id="install-command">$ npm install 4front-apphost --save</div>
+
+	<!-- <a href="{% if page.lang == 'en' %}/docs{% else %}/docs-{{ page.lang }}{% endif %}/getting-started.html">Getting Started</a> -->
+</section>
+
+<section id="intro">
+	<div id="boxes" class="clearfix">
+		<div id="web-applications">
+				<h3>Multi-Tenant</h3> With a single 4front instance, host many virtual web apps as you like, each with a unique URL like <strong>myapp.hostcontainer.com</strong>.
+		</div>
+
+		<div id="apis">
+				<h3>Single Page Apps</h3>Purpose built for today's single page applications built with tools such as <a href="http://angularjs.org" target="_blank">AngularJS</a>, <a href="http://emberjs.com" target="_blank">Ember</a>, and <a href="http://facebook.github.io/react/" target="_blank">React</a>.
+		</div>
+
+		<div id="performance">
+				<h3>Performance</h3> 4front adds an additional thin layer atop Express providing the minimal foundation required for multi-tenant hosting of single page apps.
+		</div>
+
+		<div id="philosophy">
+			<h3>Philosophy</h3> Carry on the Express philosophy of a fast, un-opinionated, and highly modular web framework. Promotes the tenants of <a href="http://12factor.net/" target="_blank">12 factor apps</a>.
+		</div>
+	</div>
+</section>
