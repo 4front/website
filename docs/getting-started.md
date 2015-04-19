@@ -15,6 +15,8 @@ The 4front platform is comprised of 4 major components (naturally):
 ## Virtual App Host
 At the core of 4front is a virtual app host acting as the multi-tenant container. Execution of the HTTP request is passed through a pipeline of Express middleware functions that is dynamiclly composed based on the unique configuration of the virtual app.
 
+[Learn about virtual apps](/docs/virtual-apps.html)
+
 ## API
 The API provides REST endpoints for programmatically managing all aspects of the platform including:
 

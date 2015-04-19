@@ -4,6 +4,9 @@
  * Based on dabblet (http://dabblet.com)
  * @author Lea Verou
  */
+pre, code {
+	background: #F7F7F7;;
+}
 
 code[class*="language-"],
 pre[class*="language-"] {

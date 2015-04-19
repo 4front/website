@@ -1,16 +1,30 @@
 <ul id="menu">
 	<li>
-		<a href="getting-started.html" {% if page.name == 'getting-started.md' %}class="active"{% endif %}>Getting Started</a>
+		<a href="/docs/getting-started.html" {% if page.name == 'getting-started.md' %}class="active"{% endif %}>Getting Started</a>
 	</li>
 	<li>
-		<a href="installation.html" {% if page.name == 'installation.md' %}class="active"{% endif %}>Installation</a>
+		<a href="/docs/installation.html" {% if page.name == 'installation.md' %}class="active"{% endif %}>Installation</a>
 	</li>
 	<li>
-		<a href="middleware.html" {% if page.name == 'middleware.md' %}class="active"{% endif %}>Middleware</a>
+		<a href="/docs/middleware.html" {% if page.name == 'middleware.md' %}class="active"{% endif %}>Middleware</a>
 	</li>
 	<li>
-		<a href="env-vars.html" {% if page.name == 'env-vars.md' %}class="active"{% endif %}>Env Variables</a>
+		<a href="/docs/env-vars.html" {% if page.name == 'env-vars.md' %}class="active"{% endif %}>Env Variables</a>
 	</li>
+	<li>
+		<a href="/docs/router.html" {% if page.submenu == 'router' %}class="active"{% endif %}>Virtual Router</a>
+		<ul>
+			<li>
+				<a href="/docs/router/html-page.html" {% if page.name == 'html-page.md' %}class="active"{% endif %}>html-page</a>
+			</li>
+			<li>
+				<a href="/docs/router/static-asset.html" {% if page.name == 'static-asset.md' %}class="active"{% endif %}>static-asset</a>
+			</li>
+			<li>
+				<a href="/docs/router/traffic-control.html" {% if page.name == 'traffic-control.md' %}class="active"{% endif %}>traffic-control</a>
+			</li>
+		</ul>
+	</li>	
 	<li>
 		<a href="configuration.html" {% if page.name == 'configuration.md' %}class="active"{% endif %}>Configuration</a>
 	</li>

@@ -639,10 +639,10 @@ footer {
   list-style: none;
 }
 
-#menu ul {
+/*#menu ul {
   height: 0;
   overflow-y: hidden;
-}
+}*/
 
 #menu ul.active {
   height: auto;
