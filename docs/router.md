@@ -8,7 +8,7 @@ lang: en
 
 Virtual applications are nothing more than Express apps that run as sub-apps within the context of the main platform app (which is itself an Express app).
 
-4front takes advantage of the [Router](http://expressjs.com/4x/api.html#router) object to provide an isolated pipeline of middleware and routes specific to each virtual app. What's different is that rather than authoring server JavaScript code to wire up the middleware, a declarative JSON manifest is used. 
+4front takes advantage of the [Express Router](http://expressjs.com/4x/api.html#router) object to provide an isolated pipeline of middleware and routes specific to each virtual app. What's different is that rather than authoring server JavaScript code to wire up the middleware, a declarative JSON manifest is used.
 Through composition of different router stacks, it's possible to run everything from simple static HTML websites to sophisticated single page apps with authentication, secure API integration, database integration, and more.
 
 ## Middleware
@@ -21,7 +21,7 @@ module.exports = function(options) {
 };
 ~~~
 
-<div class="doc-box doc-warn" markdown="1">
+<div class="doc-box doc-info" markdown="1">
 The properties of the `options` object are restricted to types that can be represented in JSON, namely numbers, strings, booleans, arrays, and objects, but __not__ functions.
 </div>
 
@@ -44,7 +44,7 @@ These middleware modules have been explicitly tested with the 4front virtual rou
 
 
 ## App Manifest
-Rather than introduce a proprietary manifest file, and in keeping with "the Node way", 4front simply extends `package.json` with a new section named `_virtualApp`. The `router` section is used to declare the middleware and routes that describe the server-side functionality of the app. Here's an example of a basic static HTML website: 
+Rather than introduce a proprietary manifest file, and in keeping with "the Node way", 4front simply extends `package.json` with a new section named `_virtualApp`. The `router` section is used to declare the middleware and routes that describe the server-side functionality of the app. Here's an example of a basic static HTML website:
 
 ~~~js
 {
@@ -109,8 +109,9 @@ __`environments`__
 
 Optional array specifying which environments this middleware should execute in. If omitted the middleware is applicable in all environments.
 
-### Order is Important!
-This being Express, middleware is executed in the order in which they are declared so some thought needs to be put into the proper sequencing. 
+<div class="doc-box doc-info" markdown="1">
+__Order is important!__ This being Express, middleware is executed in the order in which they are declared so some thought needs to be put into the proper sequencing.
+</div>
 
 ### Paths and Methods
 
@@ -140,10 +141,3 @@ Now with a `method` option:
 // Translates to:
 router.get("/public/about", htmlPage(options));
 ~~~
-
-
-
-
-
-
-

@@ -930,3 +930,6 @@ footer {
 
 }
 
+code.language-sh {
+  background-color: inherit;
+}

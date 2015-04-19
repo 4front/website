@@ -1,17 +1,45 @@
 <header>
   <div id="mobile-menu">
-      <div id="nav-button" class="fa fa-bars fa-2x button"></div>
+    <div id="nav-button" class="fa fa-bars fa-2x button"></div>
   </div>
-  <section id="logo"><a href="/" class="4front"><img src="https://s3-us-west-2.amazonaws.com/4front-media/4front-logo.png"></a>
+  <section id="logo">
+    <a href="/" class="4front">
+      <img src="https://s3-us-west-2.amazonaws.com/4front-media/4front-logo.png">
+    </a>
   </section>
   <div id="navbar">
-      <ul id="navmenu">
-          <li><a href="{% if page.lang == 'en' %}/{% else %}/{{ page.lang }}/{% endif %}" id="home-menu"{% if page.menu == 'home' %} class="active"{% endif %}>Home</a></li>
+    <ul id="navmenu">
+      <li><a href="{% if page.lang == 'en' %}/{% else %}/{{ page.lang }}/{% endif %}" id="home-menu" {% if page.menu == 'home' %}class="active" {% endif %}>Home</a>
+      </li>
 
-          <li><a href="{% if page.lang == 'en' %}/docs{% else %}/docs-{{ page.lang }}{% endif %}/getting-started.html" id="home-menu"{% if page.menu == 'docs' %} class="active"{% endif %}>Documentation</a></li>
+      <!--
+      <li>
+        <ul id="getting-started-menu" class="menu">
+          <li>
+            <a href="{% if page.lang != 'en' %}/{{ page.lang }}{% endif %}/starter/installing.html" {% if page.menu=='install' %} class="active" {% endif %}>Installation</a>
+            <ul>
+              <li>
+                <a href="{% if page.lang != 'en' %}/{{ page.lang }}{% endif %}/install/local-install.html">
+                  Installing Locally
+                </a>
+              </li>
+              <li>
+                <a href="{% if page.lang != 'en' %}/{{ page.lang }}{% endif %}/install/install-aws.html">
+                  Installing on AWS
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    -->
 
-          <li><a href="/api{% if page.lang == 'en' %}{% else %}-{{ page.lang }}{% endif %}.html" {% if page.menu == 'api' %}class="active"{% endif %}>API Reference</a></li>
-      </ul>
+      <li><a href="{% if page.lang == 'en' %}/docs{% else %}/docs-{{ page.lang }}{% endif %}/getting-started.html" id="home-menu" {% if page.menu == 'docs' %}class="active"{% endif %}>Documentation</a>
+      </li>
+
+      <li><a href="/api{% if page.lang == 'en' %}{% else %}-{{ page.lang }}{% endif %}.html" {% if page.menu=='api' %}class="active" {% endif %}>API Reference</a>
+      </li>
+    </ul>
   </div>
   <!-- <a href="http://strongloop.com/node-js/training/" title="Node and Express Training from StrongLoop" id="strongloop-header">Express and Node.js Training from StrongLoop</a> -->
 </header>
