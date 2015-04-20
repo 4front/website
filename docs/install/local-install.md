@@ -131,7 +131,7 @@ You should be able to load the 4front portal in your browser at `http://mywebapp
 
 ~~~sh
 $ npm install -g 4front-cli
-$ 4front add-profile --name local --url http://mywebapps.dev
+$ 4front add-profile --profile-name local --profile-url http://mywebapps.dev
 ~~~
 
 Finally go ahead and create your first app!
