@@ -91,41 +91,6 @@ $(function(){
 
     var h = closest();
     if (!h) return;
-
-
-    if (window.location.pathname == '/3x/api.html') {
-
-      if (prev) {
-      prev.removeClass('active');
-      prev.parent().parent().removeClass('active');
-      }
-      var a = $('a[href="#' + h.id + '"]');
-      a.addClass('active');
-      a.parent().parent().addClass('active');
-      prev = a;
-
-    }
-
-    else {
-
-      currentApiPrefix = h.id.split('.')[0];
-      parentMenuSelector = '#'+ currentApiPrefix + '-menu';
-
-      $(parentMenuSelector).addClass('active');
-
-      if (lastApiPrefix && (lastApiPrefix != currentApiPrefix)) {
-        $('#'+ lastApiPrefix + '-menu').removeClass('active');
-      }
-
-      $('#menu li a').removeClass('active');
-
-      var a = $('a[href="#' + h.id + '"]');
-      a.addClass('active');
-
-      lastApiPrefix = currentApiPrefix.split('.')[0];
-
-    }
-
   })
 
   // show mobile menu
