@@ -11,12 +11,116 @@ This guide walks through the process of getting 4front up and running on a local
 ## Prerequisites
 
 ### Dnsmasq
-A common local development setup is to use [Dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html) to resolve any `.dev` HTTP request to the local IP `127.0.0.1`. Follow the simple steps outlined in the following article to install and configure Dnsmasq on OSX:
+A common local development setup is to use [Dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html) to resolve any `.dev` HTTP request to the local IP `127.0.0.1`. This avoids having to create a host file entry for every new virtual app created. Homebrew makes installation a breeze:
 
+~~~sh
+$ brew install dnsmasq
+~~~
+
+Follow the prompt to configure `launchctl` to automatically launch dnsmasq at startup.
+
+Create a new file at `/usr/local/etc/dnsmasq.conf`. Open it in your favorite editor and add the following line:
+
+~~~
+address=/dev/127.0.0.1
+~~~
+
+Save the file and restart Dnsmasq.
+
+~~~sh
+$ sudo launchctl stop homebrew.mxcl.dnsmasq
+$ sudo launchctl start homebrew.mxcl.dnsmasq
+~~~
+
+Test that the Dnsmasq is working correctly with the `dig` utility:
+
+~~~sh
+$ dig testing.testing.one.two.three.dev @127.0.0.1
+~~~
+
+You should get back a response something like:
+
+~~~sh
+;; ANSWER SECTION:
+testing.testing.one.two.three.dev. 0 IN	A	127.0.0.1
+~~~
+
+Assuming that worked, now we need to configure OSX to send `.dev` DNS queries to Dnsmasq. We can take advantage of OSX support for the unix [resolver command](http://unixhelp.ed.ac.uk/CGI/man-cgi?resolver+5) which allows configuring DNS resolvers for a specific top level domain like `.dev`.
+
+If the directory `/etc/resolver` doesn't exist, go ahead and create it:
+
+~~~sh
+$ sudo mkdir -p /etc/resolver
+~~~
+
+Run the following command to create a new `dev` file that specify that `127.0.0.1` should be used to resolve any `.dev` request.
+
+~~~sh
+$ sudo tee /etc/resolver/dev >/dev/null <<EOF
+nameserver 127.0.0.1
+EOF
+~~~
+
+Finally test that DNS requests for `.dev` domains resolve correctly:
+
+~~~sh
+$ ping -c 1 test.dev
+~~~
+
+You should see a response similar to this:
+
+~~~sh
+PING test.dev (127.0.0.1): 56 data bytes
+64 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.028 ms
+~~~
+
+You can read more on this setup here:
 [Using Dnsmasq for local development on OS X](http://passingcuriosity.com/2013/dnsmasq-dev-osx/)
 
-### Apache
-Apache is used as a reverse proxy that sits in front of the 4front node app. It is used to translate incoming URLs in the form `*.mywebapps.dev` to the port where the node app is listening, i.e. `localhost:1903`. Apache comes pre-installed on OSX, but it is also possible to use Nginx.
+### Nginx
+Nginx is used as a reverse proxy that sits in front of the 4front node app. It is used to translate incoming URLs in the form `*.4front.dev` to the port where the node app is listening, i.e. `localhost:1903`.
+
+Nginx can be installed with Homebrew. Disregard the instructions to configure `launchctl` for now.
+
+~~~sh
+$ brew install nginx
+~~~
+
+We need nginx to listen on port 80 which requires running as root. Create a file at `/Library/LaunchAgents/homebrew.mxcl.nginx.plist` with the following contents:
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>nginx</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <false/>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/opt/nginx/bin/nginx</string>
+        <string>-g</string>
+        <string>daemon off;</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/usr/local</string>
+  </dict>
+</plist>
+~~~
+
+<div class="doc-box doc-warn" markdown="1">
+Be sure the path to the nginx executable matches where Homebrew put it on your system, other instructions on the web refer to __sbin__ rather than __bin__.
+</div>
+
+Now register nginx to automatically launch at startup:
+
+```sh
+$ sudo launchctl load -w /Library/LaunchAgents/homebrew.mxcl.nginx.plist
+$ sudo launchctl start nginx
+```
 
 ### DynamoDB Local
 The production version of 4front is designed to run on AWS using DynamoDB as a metadata store. Fortunately for local development there exists [DynamoDb Local](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html). If you're on OSX, I recommend installing it with Homebrew using the command:
@@ -27,111 +131,73 @@ $ brew install dynamodb-local
 
 Follow the instructions to automatically launch it upon startup with `launchctl`.
 
-### Redis
-Install [redis](http://redis.io/topics/quickstart). If you're on OSX, once again Homebrew is your friend: `brew install redis` and follow the `launchctl` instructions to launch on startup.
-
 ## Installation
 
-### Clone Repo
-Clone this repo (https://github.com/4front/local-template.git) locally. Then open a command prompt at the root of the repo and run:
-
 ~~~sh
-$ npm install
-~~~
-
-### Create DynamoDB Tables
-Run the following node script to create the 4front DynamoDB tables:
-
-~~~sh
-$ node ./node_modules/4front-dynamodb/scripts/create-local-tables.js
+$ npm install 4front-local -g
 ~~~
 
 ### Virtual App Host
-Choose a top level hostname that will serve as the URL of your platform. For example: `mywebapps.dev`. Virtual apps deployed to the platform are accessed via a URL in the form: `appname.mywebapps.dev`.
+Choose a top level hostname that will serve as the URL of your platform. These instructions assume the default value `4front.dev`. You can choose anything you like so long as it has a `.dev` extension. Virtual apps deployed to the platform are accessed via a URL in the form: `appname.4front.dev`.
 
-<div class="doc-box doc-info" markdown="1">
-Henceforth, you should replace `mywebapps.dev` with your chosen virtual host name, which should have a `.dev` extension.
-</div>
-
-### Configure Reverse Proxy
-This step describes how to setup an [Apache vhost](http://httpd.apache.org/docs/2.2/vhosts/) that acts as the reverse proxy for all 4front requests. These instructions are specific to Apache, but if you prefer Nginx, this [Digital Ocean tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-virtual-hosts-server-blocks-on-ubuntu-12-04-lts--3) is a good place to start.
-
-First you'll need to ensure that Apache is setup to allow vhosts. Open the file `/etc/apache2/httpd.conf` and ensure the "Include /private..." line shown below is uncommented:
+### Configure Nginx Reverse Proxy
+Now we need to configure Nginx to act as a reverse proxy that routes all inbound requests to `*.4front.dev` to `localhost:1903`. Open `/usr/local/etc/nginx/nginx.conf` in your favorite editor and the following section:
 
 ~~~
-# Virtual hosts
-
-Include /private/etc/apache2/extra/httpd-vhosts.conf
+server {
+  listen       80;
+  server_name  4front.dev;
+  location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_pass http://localhost:1903;
+    break;
+  }
+}
 ~~~
 
-Also ensure the following line is uncommented:
-
-~~~
-LoadModule vhost_alias_module libexec/apache2/mod_vhost_alias.so
-~~~
-
-Now edit `/etc/apache2/extra/httpd-vhosts.conf` and insert the following block (making sure to change `ServerName` and `ServerAlias` to your virtual app host):
-
-~~~
-<VirtualHost *:80>
-  RequestHeader set X-Forwarded-Proto "http"
-  ServerName mywebapps.dev
-  ServerAlias *.mywebapps.dev
-  ProxyPreserveHost  on
-  ProxyPass / http://localhost:1903/
-  ProxyPassReverse / http://localhost:1903
-</VirtualHost>
-~~~
-
-After saving your changes, restart Apache:
+Now restart nginx to ensure the changes are applied:
 
 ~~~sh
-$ sudo apachectl restart
+$ launchctl stop nginx & launchctl start nginx
 ~~~
 
-#### Enabling SSL
 <div class="doc-box doc-warn" markdown="1">
-Production 4front instances should always use SSL, but for local development, this step is __optional__. If you do configure SSL, specify __https:__//mywebapps.dev rather than http://mywebapps.dev in subsequent steps.
+#### Configuring SSL
+Production 4front instances should always use https. To keep things simple this guide does not walk through configuring this for a local installation, but you can add an additional server in the nginx.conf listenting on port 443. This also entails configuring a self-signed certificate which you can read about [here](https://gist.github.com/jed/6147872#create-a-wildcard-ssl-certificate-for-each-project).
 </div>
-
-If you want to SSL enable the 4front platform, you'll need to create a self-signed certificate. Follow the steps described in this article:
-
-[How to Create and Install an Apache Self Signed Certificate](https://www.sslshopper.com/article-how-to-create-and-install-an-apache-self-signed-certificate.html)
-
-When OpenSSL prompts you for a common name, enter your virtual host name as a wildcard, i.e. `*.mywebapps.dev`. Once your certificate keys have been created, add an additional `VirtualHost` section to `/etc/apache2/extra/httpd-vhosts.conf` like so:
-
-~~~
-<VirtualHost *:443>
-  RequestHeader set X-Forwarded-Proto "https"
-  ServerName myapphost.dev
-  ServerAlias *.mywebapps.dev
-  ProxyPreserveHost  on
-  ProxyPass / http://localhost:1903/
-  ProxyPassReverse / http://localhost:1903
-  SSLEngine on
-  SSLCertificateFile "/etc/apache2/ssl/server.crt"
-  SSLCertificateKeyFile "/etc/apache2/ssl/host.nopass.key"
-</VirtualHost>
-~~~
-
-Once again, restart Apache:
-
-~~~sh
-$ sudo apachectl restart
-~~~
 
 ### Starting the 4front Platform
 Now you are ready to fire up the server:
 
 ~~~sh
-$ FF_VIRTUAL_HOST=mywebapps.dev node app.js
+$ 4front-local
 ~~~
 
-You should be able to load the 4front portal in your browser at `http://mywebapps.dev/portal`. You'll also want to install the 4front CLI and add your new local instance as a profile:
+If you configured nginx with a virtual host other than `4front.dev`, pass it as an argument:
+
+~~~sh
+$ 4front-local -h myhostname.dev
+~~~
+
+You should be able to load the 4front portal in your browser:
+
+[http://4front.dev/portal](http://4front.dev/portal)
+
+Since this is a local test installation, you can login with any username and password you like. A real deployment would be configured to use  an identity provider like Active Directory.
+
+### Install the CLI
 
 ~~~sh
 $ npm install -g 4front-cli
-$ 4front add-profile --profile-name local --profile-url http://mywebapps.dev
+~~~
+
+Setup your local instance as a profile:
+
+~~~sh 
+$ 4front add-profile --profile-name local --profile-url http://4front.dev
 ~~~
 
 Finally go ahead and create your first app!
