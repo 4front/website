@@ -11,7 +11,9 @@ This guide walks through the process of getting 4front up and running on a local
 ## Prerequisites
 
 ### Dnsmasq
-A common local development setup is to use [Dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html) to resolve any `.dev` HTTP request to the local IP `127.0.0.1`. This avoids having to create a host file entry for every new virtual app created. Homebrew makes installation a breeze:
+A common local development setup is to use [Dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html) to resolve all requests for a particular top level domain to the local IP `127.0.0.1`. This avoids having to create a host file entry for every new virtual app created. The `4front-local` package assumes a `.dev` top level domain.
+
+[Homebrew](http://brew.sh/) makes installation a breeze:
 
 ~~~sh
 $ brew install dnsmasq
@@ -32,7 +34,7 @@ $ sudo launchctl stop homebrew.mxcl.dnsmasq
 $ sudo launchctl start homebrew.mxcl.dnsmasq
 ~~~
 
-Test that the Dnsmasq is working correctly with the `dig` utility:
+Now test that the Dnsmasq is working correctly with the `dig` utility:
 
 ~~~sh
 $ dig testing.testing.one.two.three.dev @127.0.0.1
@@ -40,12 +42,12 @@ $ dig testing.testing.one.two.three.dev @127.0.0.1
 
 You should get back a response something like:
 
-~~~sh
+~~~
 ;; ANSWER SECTION:
 testing.testing.one.two.three.dev. 0 IN	A	127.0.0.1
 ~~~
 
-Assuming that worked, now we need to configure OSX to send `.dev` DNS queries to Dnsmasq. We can take advantage of OSX support for the unix [resolver command](http://unixhelp.ed.ac.uk/CGI/man-cgi?resolver+5) which allows configuring DNS resolvers for a specific top level domain like `.dev`.
+Assuming that worked, next we need to configure OSX to send `.dev` DNS queries to Dnsmasq. We can take advantage of OSX support for the unix [resolver command](http://unixhelp.ed.ac.uk/CGI/man-cgi?resolver+5) which allows configuring DNS resolvers for a specific top level domain like `.dev`.
 
 If the directory `/etc/resolver` doesn't exist, go ahead and create it:
 
@@ -64,12 +66,12 @@ EOF
 Finally test that DNS requests for `.dev` domains resolve correctly:
 
 ~~~sh
-$ ping -c 1 test.dev
+$ ping -c 1 test.local
 ~~~
 
 You should see a response similar to this:
 
-~~~sh
+~~~
 PING test.dev (127.0.0.1): 56 data bytes
 64 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.028 ms
 ~~~
@@ -80,7 +82,7 @@ You can read more on this setup here:
 ### Nginx
 Nginx is used as a reverse proxy that sits in front of the 4front node app. It is used to translate incoming URLs in the form `*.4front.dev` to the port where the node app is listening, i.e. `localhost:1903`.
 
-Nginx can be installed with Homebrew. Disregard the instructions to configure `launchctl` for now.
+Nginx can alos be installed with Homebrew. Disregard the instructions to configure `launchctl` for now.
 
 ~~~sh
 $ brew install nginx
@@ -117,21 +119,22 @@ Be sure the path to the nginx executable matches where Homebrew put it on your s
 
 Now register nginx to automatically launch at startup:
 
-```sh
+~~~ sh
 $ sudo launchctl load -w /Library/LaunchAgents/homebrew.mxcl.nginx.plist
 $ sudo launchctl start nginx
-```
+~~~
 
 ### DynamoDB Local
-The production version of 4front is designed to run on AWS using DynamoDB as a metadata store. Fortunately for local development there exists [DynamoDb Local](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html). If you're on OSX, I recommend installing it with Homebrew using the command:
+The production version of 4front is designed to run on AWS using DynamoDB as a metadata store. Fortunately for local development there exists [DynamoDb Local](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html). Once again, Homebrew to the rescue:
 
 ~~~sh
 $ brew install dynamodb-local
 ~~~
 
-Follow the instructions to automatically launch it upon startup with `launchctl`.
+This time do follow the instructions to automatically launch it upon startup with `launchctl`.
 
 ## Installation
+Now we can install `4front-local` itself:
 
 ~~~sh
 $ npm install 4front-local -g
@@ -141,7 +144,7 @@ $ npm install 4front-local -g
 Choose a top level hostname that will serve as the URL of your platform. These instructions assume the default value `4front.dev`. You can choose anything you like so long as it has a `.dev` extension. Virtual apps deployed to the platform are accessed via a URL in the form: `appname.4front.dev`.
 
 ### Configure Nginx Reverse Proxy
-Now we need to configure Nginx to act as a reverse proxy that routes all inbound requests to `*.4front.dev` to `localhost:1903`. Open `/usr/local/etc/nginx/nginx.conf` in your favorite editor and the following section:
+Now we need to configure Nginx to act as a reverse proxy that routes all inbound requests to `*.4front.dev` to `localhost:1903`. Open `/usr/local/etc/nginx/nginx.conf` in your favorite editor and the following [server block](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-14-04-lts):
 
 ~~~
 server {
@@ -196,7 +199,7 @@ $ npm install -g 4front-cli
 
 Setup your local instance as a profile:
 
-~~~sh 
+~~~sh
 $ 4front add-profile --profile-name local --profile-url http://4front.dev
 ~~~
 
