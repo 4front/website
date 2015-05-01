@@ -16,7 +16,7 @@ A common local development setup is to use [Dnsmasq](http://www.thekelleys.org.u
 [Using Dnsmasq for local development on OS X](http://passingcuriosity.com/2013/dnsmasq-dev-osx/)
 
 ### Apache
-Apache is used as a reverse proxy that sits in front of the 4front node app. It is used to translate incoming URLs in the form `*.mywebapps.dev` to the port where the node app is listening, i.e. `localhost:1903`. Apache comes pre-installed on OSX, but it is also possible to use Nginx.
+Apache is used as a reverse proxy that sits in front of the 4front node app. It is used to translate incoming URLs in the form `*.4front.dev` to the port where the node app is listening, i.e. `localhost:1903`. Apache comes pre-installed on OSX, but it is also possible to use Nginx.
 
 ### DynamoDB Local
 The production version of 4front is designed to run on AWS using DynamoDB as a metadata store. Fortunately for local development there exists [DynamoDb Local](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html). If you're on OSX, I recommend installing it with Homebrew using the command:
@@ -32,11 +32,11 @@ Install [redis](http://redis.io/topics/quickstart). If you're on OSX, once again
 
 ## Installation
 
-### Clone Repo
-Clone this repo (https://github.com/4front/local-template.git) locally. Then open a command prompt at the root of the repo and run:
+### Install 4front-local
+Install the 4front local platform from npm.
 
 ~~~sh
-$ npm install
+$ npm install 4front-local -g
 ~~~
 
 ### Create DynamoDB Tables
@@ -47,10 +47,10 @@ $ node ./node_modules/4front-dynamodb/scripts/create-local-tables.js
 ~~~
 
 ### Virtual App Host
-Choose a top level hostname that will serve as the URL of your platform. For example: `mywebapps.dev`. Virtual apps deployed to the platform are accessed via a URL in the form: `appname.mywebapps.dev`.
+Choose a top level hostname that will serve as the URL of your platform. The default value is `4front.dev`. Virtual apps deployed to the platform are accessed via a URL in the form: `appname.4front.dev`.
 
 <div class="doc-box doc-info" markdown="1">
-Henceforth, you should replace `mywebapps.dev` with your chosen virtual host name, which should have a `.dev` extension.
+If you use a different host name, replace `4front.dev` in subsequent steps with your value (which should still have a `.dev` extension).
 </div>
 
 ### Configure Reverse Proxy
@@ -75,8 +75,8 @@ Now edit `/etc/apache2/extra/httpd-vhosts.conf` and insert the following block (
 ~~~
 <VirtualHost *:80>
   RequestHeader set X-Forwarded-Proto "http"
-  ServerName mywebapps.dev
-  ServerAlias *.mywebapps.dev
+  ServerName 4front.dev
+  ServerAlias *.4front.dev
   ProxyPreserveHost  on
   ProxyPass / http://localhost:1903/
   ProxyPassReverse / http://localhost:1903
@@ -91,10 +91,21 @@ $ sudo apachectl restart
 
 #### Enabling SSL
 <div class="doc-box doc-warn" markdown="1">
-Production 4front instances should always use SSL, but for local development, this step is __optional__. If you do configure SSL, specify __https:__//mywebapps.dev rather than http://mywebapps.dev in subsequent steps.
+Production 4front instances should always use SSL, but for local development, this step is __optional__.
 </div>
 
-If you want to SSL enable the 4front platform, you'll need to create a self-signed certificate. Follow the steps described in this article:
+First we'll need to create a self-signed certificate. Create a directory to place the certs. This example uses `/etc/ssl`:
+~~~sh
+$ sudo mkdir -p /etc/ssl/private && sudo mkdir -p /etc/ssl/certs
+~~~
+
+Now generate the private and public certs. When prompted for the "Common Name", be sure to specify `*.4front.dev` (the leading *. is critical) or whatever virtual host name you've chosen:
+
+~~~sh
+$ sudo openssl req -x509 -nodes -days 365 -newkey rsa:1024 \
+    -keyout /etc/ssl/private/4front.key \
+    -out /etc/ssl/certs/4front.crt
+~~~
 
 [How to Create and Install an Apache Self Signed Certificate](https://www.sslshopper.com/article-how-to-create-and-install-an-apache-self-signed-certificate.html)
 
@@ -103,8 +114,8 @@ When OpenSSL prompts you for a common name, enter your virtual host name as a wi
 ~~~
 <VirtualHost *:443>
   RequestHeader set X-Forwarded-Proto "https"
-  ServerName myapphost.dev
-  ServerAlias *.mywebapps.dev
+  ServerName 4front.dev
+  ServerAlias *.4front.dev
   ProxyPreserveHost  on
   ProxyPass / http://localhost:1903/
   ProxyPassReverse / http://localhost:1903
