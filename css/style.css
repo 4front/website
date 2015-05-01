@@ -25,7 +25,7 @@ h1 {
 }
 
 h1, h2, h3 {
-  margin: 5px 0;
+  margin: 15px 0 10px 0;
   color: #353535;
   -webkit-font-smoothing: antialiased;
 }
@@ -41,7 +41,7 @@ p em {
 
 p {
   margin: 10px 0;
-  line-height: 1.35em;
+  line-height: 1.5em;
 }
 
 strong, th {
@@ -246,7 +246,21 @@ header {
 
 p code, td code {
   color: #333;
+  background-color: rgba(0,0,0,0.04);
+  padding: 0.2em;
+  /*padding-top: 0.2em;
+  padding-bottom: 0.2em;*/
+  border-radius: 3px;
 }
+
+/*padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}*/
 
 pre {
   color: #666;
@@ -423,11 +437,11 @@ html[xmlns] .clearfix {
 /* doc boxes */
 
 .doc-box {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 14px;
-  padding: 10px;
+  padding: 10px 3% 10px 3%;
   border-radius: 3px;
-  margin: 20px 3% 20px 3%;
+  margin: 20px 0 20px 0;
 }
 
 .doc-box pre {
@@ -439,6 +453,10 @@ html[xmlns] .clearfix {
 
 .doc-box p {
   margin: 0 0 8px 0;
+}
+
+.doc-box h4 {
+  margin-top: 0;
 }
 
 .doc-box p:last-child {
