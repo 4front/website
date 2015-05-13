@@ -66,7 +66,7 @@ EOF
 Finally test that DNS requests for `.dev` domains resolve correctly:
 
 ~~~sh
-$ ping -c 1 test.local
+$ ping -c 1 test.dev
 ~~~
 
 You should see a response similar to this:
@@ -82,7 +82,7 @@ You can read more on this setup here:
 ### Nginx
 Nginx is used as a reverse proxy that sits in front of the 4front node app. It is used to translate incoming URLs in the form `*.4front.dev` to the port where the node app is listening, i.e. `localhost:1903`.
 
-Nginx can alos be installed with Homebrew. Disregard the instructions to configure `launchctl` for now.
+Nginx can also be installed with Homebrew. **Disregard** the instructions to configure `launchctl` for now.
 
 ~~~sh
 $ brew install nginx
