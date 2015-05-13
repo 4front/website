@@ -164,7 +164,7 @@ server {
 Now restart nginx to ensure the changes are applied:
 
 ~~~sh
-$ launchctl stop nginx & launchctl start nginx
+$ launchctl stop nginx && launchctl start nginx
 ~~~
 
 <div class="doc-box doc-warn" markdown="1">
