@@ -133,6 +133,16 @@ $ brew install dynamodb-local
 
 This time do follow the instructions to automatically launch it upon startup with `launchctl`.
 
+### Redis
+
+Redis is used for short term caching, for example sessions and development assets.
+
+~~~sh
+$ brew install redis
+~~~
+
+This time do follow the instructions to automatically launch it upon startup with `launchctl`.
+
 ## Installation
 Now we can install `4front-local` itself:
 
