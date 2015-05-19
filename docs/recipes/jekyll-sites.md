@@ -1,4 +1,12 @@
-# Jekyll Sites
+---
+layout: docs
+title: Jekyll Sites
+menu: docs
+submenu: recipes
+lang: en
+---
+
+<img src="https://jekyll.github.io/brand/jekyll-logo-light-solid.png" style="height:200px" />
 
 4front is a great way to deploy sites and blogs built with [Jekyll](http://jekyllrb.com/), a popular static site generator from GitHub.
 
@@ -31,7 +39,17 @@ Additionally add the `baseDir` pointing to `_site` which is the default name of 
 ~~~
 
 ## Editing and Deploying
-Start the development sandbox by running `4front dev`. When you're ready to deploy: `4front deploy`.
+Start the development sandbox with:
+
+~~~sh
+$ 4front dev
+~~~
+
+When you're ready to deploy:
+
+~~~sh
+$ 4front deploy
+~~~
 
 ## Using a Theme
 There are lots of pre-build themes to start from. You can create a new 4front Jekyll app directly from a theme by picking one from a site like [http://jekyllthemes.org/](http://jekyllthemes.org/). Copy the download link and run the following command:
