@@ -82,13 +82,17 @@ You can read more on this setup here:
 ### Nginx
 Nginx is used as a reverse proxy that sits in front of the 4front node app. It is used to translate incoming URLs in the form `*.4front.dev` to the port where the node app is listening, i.e. `localhost:1903`.
 
-Nginx can also be installed with Homebrew. **Disregard** the instructions to configure `launchctl` for now.
+Nginx can also be installed with Homebrew.
+
+<div class="doc-box doc-warn" markdown="1">
+We will be configuring nginx to run on port 80 which requires root access. **Disregard** the instructions to configure `launchctl` for now, we'll manually configure `launchctl` next.
+</div>
 
 ~~~sh
 $ brew install nginx
 ~~~
 
-We need nginx to listen on port 80 which requires running as root. Create a file at `/Library/LaunchAgents/homebrew.mxcl.nginx.plist` with the following contents:
+Create a file at `/Library/LaunchAgents/homebrew.mxcl.nginx.plist` with the following contents:
 
 ~~~xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -126,7 +130,7 @@ $ sudo launchctl start nginx
 
 #### Troubleshooting Nginx
 
-If you need to troubleshoot nginx, it's often helpful to tail the access or error log:
+If you need to troubleshoot nginx, it's often helpful to tail the access and/or error logs:
 
 ~~~sh
 $ tail -f /usr/local/var/log/nginx/access.log
@@ -144,19 +148,19 @@ This time do follow the instructions to automatically launch it upon startup wit
 
 ### Redis
 
-Redis is used for short term caching, for example sessions and development assets.
+Redis is used for caching various things including session state and developer sandbox static assets.
 
 ~~~sh
 $ brew install redis
 ~~~
 
-This time do follow the instructions to automatically launch it upon startup with `launchctl`.
+Follow the instructions to automatically launch it upon startup with `launchctl`.
 
 ## Installation
 Now we can install `4front-local` itself:
 
 ~~~sh
-$ npm install 4front-local -g
+$ npm install 4front/local -g
 ~~~
 
 ### Virtual App Host
@@ -222,7 +226,7 @@ ssl_certificate_key /etc/ssl/private/4front.key;
 Restart nginx to ensure the changes are applied:
 
 ~~~sh
-$ launchctl stop nginx & launchctl start nginx
+$ launchctl stop nginx && launchctl start nginx
 ~~~
 
 <a id="starting-4front-platform"></a>
@@ -250,7 +254,7 @@ Since this is a local test installation, you can login with any username and pas
 ### Install the CLI
 
 ~~~sh
-$ npm install -g 4front-cli
+$ npm install -g 4front/cli
 ~~~
 
 Setup your local instance as a profile:
