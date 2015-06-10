@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Getting Started
+title: Introduction
 menu: docs
 lang: en
 ---

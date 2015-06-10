@@ -61,8 +61,7 @@ strong, th {
 }
 
 #home-content {
-  margin: 120px 0 2% 5%;
-  max-width: 900px;
+  margin: 80px 0 2% 5%;
   padding-right: 9%;
 }
 
@@ -196,6 +195,8 @@ a {
 #description {
   margin-bottom: 40px;
   -webkit-font-smoothing: antialiased;
+  max-width:900px;
+  padding-top: 40px;
 }
 
 #description .description {
@@ -212,10 +213,6 @@ a {
   font-size: 9px;
   color: #999;
   margin-left: 5px;
-}
-
-#intro {
-  margin-left: 5%;
 }
 
 #sponsorship, #sponsorship a {

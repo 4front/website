@@ -4,9 +4,12 @@
   {% include head.html %}
 
   <body>
+    {% include header-{{ page.lang }}.html %}
 
-    {{ content }}
-    
+    <section id="home-content">
+      {{ content }}
+    </section>
+
     {% include footer-{{ page.lang }}.html %}
 
   </body>

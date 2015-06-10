@@ -9,7 +9,10 @@
   </section>
   <div id="navbar">
     <ul id="navmenu">
-      <li><a href="{% if page.lang == 'en' %}/{% else %}/{{ page.lang }}/{% endif %}" id="home-menu" {% if page.menu == 'home' %}class="active" {% endif %}>Home</a>
+      <li><a href="/" id="home-menu" {% if page.menu == 'home' %}class="active" {% endif %}>Home</a>
+      </li>
+      <li>
+        <a href="/getting-started.html" id="getting-started-menu" {% if page.menu == 'getting-started' %}class="active" {% endif %}>Getting Started</a>
       </li>
 
       <!--
@@ -34,10 +37,10 @@
       </li>
     -->
 
-      <li><a href="{% if page.lang == 'en' %}/docs{% else %}/docs-{{ page.lang }}{% endif %}/getting-started.html" id="home-menu" {% if page.menu == 'docs' %}class="active"{% endif %}>Documentation</a>
+      <li><a href="/docs/introduction.html" id="home-menu" {% if page.menu == 'docs' %}class="active"{% endif %}>Documentation</a>
       </li>
 
-      <li><a href="/api{% if page.lang == 'en' %}{% else %}-{{ page.lang }}{% endif %}.html" {% if page.menu=='api' %}class="active" {% endif %}>API Reference</a>
+      <li><a href="/api.html" {% if page.menu=='api' %}class="active" {% endif %}>API Reference</a>
       </li>
     </ul>
   </div>

@@ -21,6 +21,11 @@ Other than the `create-app` command, the CLI should be run from the root of your
 $ 4front [command] [options]
 ~~~
 
+### Configuration
+<div class="doc-box doc-info" markdown="1">
+You can configure multiple profiles enabling you to deploy different apps to different platform instances from the same CLI.
+</div>
+
 ### Authentication
 Authentication utilizes JWT tokens that are valid for 30 minutes (or whatever value is configured the target 4front platform instance). After that amount of time you are required to re-authenticate and receive a refreshed token.
 
@@ -96,7 +101,7 @@ You can also specify a `--release` option which will launch the app in release m
 Set an environment variable. By default the specified the value will be used for all environments. However you can override a value for a specific virtual environment, i.e. dev, test, production, by specifying a `--virtual-env` option.
 
 ~~~sh
-$ 4front env:set --key SOME_API_SECRET_KEY --value 29850u234asgfasg  \
+$ 4front set-env --key SOME_API_SECRET_KEY --value 29850u234asgfasg  \
 --virtual-env production
 ~~~
 
@@ -105,7 +110,7 @@ $ 4front env:set --key SOME_API_SECRET_KEY --value 29850u234asgfasg  \
 List the environment variables for the current app.
 
 ~~~sh
-$ 4front env:list
+$ 4front list-env
 ~~~
 
 ####`delete-env`
@@ -113,7 +118,7 @@ $ 4front env:list
 Delete an environment variable, either at the global level or by specifying a `--virtual-env` option.
 
 ~~~sh
-$ 4front env:del --key SOME_API_SECRET_KEY --virtual-env test
+$ 4front delete-env --key SOME_API_SECRET_KEY --virtual-env test
 ~~~
 
 ####`list-apps`
@@ -121,16 +126,17 @@ $ 4front env:del --key SOME_API_SECRET_KEY --virtual-env test
 List all the applications. If you belong to multiple organizations you will first be prompted to select which one.
 
 ~~~sh
-$ 4front app:list
+$ 4front list-apps
 ~~~
 
 ####`add-profile`
 
-Register a new 4front profile in the `.4front.json` file. If no `--platform-url` is specified you will be prompted to enter one by the CLI.
+Register a new 4front profile in the `.4front.json` file. If no `--platform-url` is specified you will be prompted to enter one by the CLI. If the platform instance supports multiple identity providers, you will need to specify the `--identity-provider` option with a value such as "github" or "active-directory".
 
 ~~~sh
 $ 4front add-profile  --platform-url https://some4frontinstance.com
 ~~~
+
 
 ####`remove-profile`
 

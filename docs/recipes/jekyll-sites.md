@@ -28,13 +28,7 @@ Additionally add the `baseDir` pointing to `_site` which is the default name of 
 
 ~~~js
 "_virtualApp": {
-  "appId": "XXX",
   "baseDir": "_site",
-  "router": [
-    {
-      "module": "webpage"
-    }
-  ]
 }
 ~~~
 
