@@ -7,6 +7,41 @@ lang: en
 
 4front comes pre-packaged with the minimum set of middleware required to stand up a bare-bones multi-tenant platform. Additional middleware are available as stand-alone modules that can be used in conjunction with 4front or on their own merits.
 
+4front takes advantage of the [Express Router](http://expressjs.com/4x/api.html#router) object to provide an isolated pipeline of middleware and routes specific to each virtual app. What's different is that rather than authoring server JavaScript code to wire up the middleware, a declarative JSON manifest is used.
+Through composition of different router stacks, it's possible to run everything from simple static HTML websites to sophisticated single page apps with authentication, secure API integration, database integration, and more.
+
+## Middleware
+If you understand how [Express middleware](http://expressjs.com/guide/using-middleware.html) works, you'll understand how the 4front virtual router operates. 4front comes with a small number of core built-in middleware, but many 3rd party Express/Connect middleware will work fine so long as it follows this common structure:
+
+~~~js
+module.exports = function(options) {
+	return function(req, res, next) {
+	}
+};
+~~~
+
+<div class="doc-box doc-info" markdown="1">
+The properties of the `options` object are restricted to types that can be represented in JSON, namely numbers, strings, booleans, arrays, and objects, but __not__ functions.
+</div>
+
+### Built-In Middleware
+* [dev-sandbox](/docs/router/dev-sandbox.html)
+* [html-page](/docs/router/html-page)
+* [static-asset](/docs/router/static-asset.html)
+* [custom-errors](/docs/router/custom-errors.html)
+* [auth-check](/docs/router/auth-check.html)
+* [logout](/docs/router/logout.html)
+* [traffic-control](/docs/router/traffic-control.html)
+
+### 3rd Party Middleware
+These middleware modules have been explicitly tested with the 4front virtual router:
+
+* [express-api-proxy](https://github.com/4front/express-api-proxy)
+* [express-session](https://github.com/expressjs/session)
+
+3rd party middleware is installed as [plugins](/docs/plugins.html). You can of course [write your own](/docs/plugins.html) plugins as well.
+
+
 ## virtual-app-loader
 Loads the correct virtual app object by parsing the `req.hostname` and extracting the second level domain name. For example if `req.hostname` is "test-app.platformhost.com" then "test-app" must be the unique virtual app name.
 
@@ -15,26 +50,19 @@ It's also possible for virtual apps to be requested via a custom domain like __w
 #### Usage
 ~~~js
 app.use(virtualAppHost.appLoader({
-	virtualHostDomain: process.env['4FRONT_VHOST_DOMAIN'],
-	findAppFn: function(query, callback) {}
+	virtualHost: process.env['4FRONT_VHOST_DOMAIN']
 }));
 ~~~
 
 #### Options
 __`virtualHostDomain`__
 
-The top level domain for the platform, for example "platformhost.com". It should be configured with your DNS provider as a [wildcard DNS record](http://en.wikipedia.org/wiki/Wildcard_DNS_record) in the form "*.platformhost.com". 
+The top level domain for the platform, for example "platformhost.com". It should be configured with your DNS provider as a [wildcard DNS record](http://en.wikipedia.org/wiki/Wildcard_DNS_record) in the form "\*.platformhost.com".
 
-It's recommended to store this string in an environment variable to enable multiple instances 4front powered by the exact same codebase. 
-
-__`findAppFn`__
-
-A function to fetch the virtualApp object that takes two arguments: `(query, callback)`. The `query` object will have either a `name` or `domain` property depending on if the incoming request was in the form __appname.platformhost.com__ or __www.customdomain.com__. 
-
- 
+It's recommended to store this string in an environment variable to enable multiple instances 4front powered by the exact same codebase.
 
 
-There are two ways that the virtual app can be declared in the URL: as a second level domain 
+There are two ways that the virtual app can be declared in the URL: as a second level domain
 
 [see code](https://github.com/4front/apphost/blob/master/lib/middleware/app-loader.js)
 
@@ -59,7 +87,7 @@ There are two ways that the virtual app can be declared in the URL: as a second 
 
 
 ## authenticated
-Checks for a user object in the session state. If it exists, sets `req.user` and `req.ext.isAuthenticated` to true. Relies upon the [session middleware](https://www.npmjs.com/package/express-session) being declared first. 
+Checks for a user object in the session state. If it exists, sets `req.user` and `req.ext.isAuthenticated` to true. Relies upon the [session middleware](https://www.npmjs.com/package/express-session) being declared first.
 
 ~~~js
 app.use(virtualAppHost.authenticated(options));
@@ -90,7 +118,7 @@ Destroys the session and redirects to a specified login page.
 ~~~
 
 ## static-asset
-Route for serving static assets like .js and .css files. If you are using a CDN, be sure to configure the `assetPath` option in the [webpage](#webpage) route. 
+Route for serving static assets like .js and .css files. If you are using a CDN, be sure to configure the `assetPath` option in the [webpage](#webpage) route.
 
 Because the asset paths are [fingerprinted](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#invalidating-and-updating-cached-responses) by the webpage middleware, very aggressive cache headers should be set. Everytime a new version is deployed, the asset paths will be modified, so there's no concern about the browser holding on to a stale version in its cache.
 
@@ -131,9 +159,9 @@ __`defaultPage`__
 
 The name of the .html page to return for requests to `/`. Defaults to `index.html`.
 
-__`cacheControl`__ 
+__`cacheControl`__
 
-Value to return as the [Cache-Control](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=en#cache-control) header. 
+Value to return as the [Cache-Control](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=en#cache-control) header.
 
 __`maxAge`__
 
@@ -148,7 +176,7 @@ __`noAuthPage`__
 The name of the page to render if `auth` is true but `req.ext.isAuthenticated` is not true.
 
 <div class="alert">
-Because the URL doesn't actually change with this option, be sure to to leave the `maxAge` option to the default value of `no-cache`. 
+Because the URL doesn't actually change with this option, be sure to to leave the `maxAge` option to the default value of `no-cache`.
 </div>
 
 __`noAuthUrl`__
@@ -157,13 +185,13 @@ Rather than rendering the `noAuthPage`, redirect to this URL when the user is no
 
 __`assetPath`__
 
-The path where static asset references in the HTML should be re-written to point at. For a CDN, this would be a full domain name like  `"//company.cdn.com/assets"`. The value must use the double leading slash to identify it as an absolute path. This is considered a best-practice as it will automatically inherit the protocol of the parent page. 
+The path where static asset references in the HTML should be re-written to point at. For a CDN, this would be a full domain name like  `"//company.cdn.com/assets"`. The value must use the double leading slash to identify it as an absolute path. This is considered a best-practice as it will automatically inherit the protocol of the parent page.
 
 In addition to the assetPath, the virtual appId and versionId will appear as additional path segments in the final rendered asset URL. This is a process known as [fingerprinting](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#invalidating-and-updating-cached-responses), a best-pratice for maximizing use of the client browser cache. For example if the following code appeared in the original source HTML:
 
 ~~~html
 <script src="js/main.js"></script>
-~~~ 
+~~~
 
 then the actual rendered HTML sent to the browser would look like (where "12345" is the virtual appId and 21 is the versionId):
 
@@ -212,7 +240,7 @@ The name of the global variable that is injected into the `<head>` of the page e
 ~~~
 
 ## error-page
-Allows customizing error pages for different http status codes. Make sure this route is declared after `webpage`. 
+Allows customizing error pages for different http status codes. Make sure this route is declared after `webpage`.
 
 #### Configuration
 ~~~js
@@ -285,9 +313,4 @@ This is a list of middleware modules that have been tested with 4front, however 
 * [express-api-proxy](https://github.com/4front/express-api-proxy)
 * oauth
 * parse-auth
-* 
-
-
-
-
-
+*

@@ -16,13 +16,16 @@
 		{% endif %}
 	</li>
 	<li>
+		<a href="/docs/cli.html" {% if page.name == 'cli.md' %}class="active"{% endif %}>CLI</a>
+	</li>
+	<li>
 		<a href="/docs/middleware.html" {% if page.name == 'middleware.md' %}class="active"{% endif %}>Middleware</a>
 	</li>
 	<li>
 		<a href="/docs/env-vars.html" {% if page.name == 'env-vars.md' %}class="active"{% endif %}>Env Variables</a>
 	</li>
 	<li>
-		<a href="/docs/router.html" {% if page.submenu == 'router' %}class="active"{% endif %}>Virtual Router</a>
+		<a href="/docs/app-manifest.html" {% if page.submenu == 'app-manifest' %}class="active"{% endif %}>App Manifest</a>
 		{% if page.submenu == 'router' %}
 		<ul>
 			<li>
@@ -38,7 +41,7 @@
 		{% endif %}
 	</li>
 	<li>
-		<a href="configuration.html" {% if page.name == 'configuration.md' %}class="active"{% endif %}>Configuration</a>
+		<a href="app-manifest.html" {% if page.name == 'app-manifest.md' %}class="active"{% endif %}>App Manifest</a>
 	</li>
 	<li>
 		<a href="dev-sandbox.html" {% if page.name == 'dev-sandbox.md' %}class="active"{% endif %}>Dev Sandbox</a>

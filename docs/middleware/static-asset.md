@@ -6,7 +6,7 @@ submenu: router
 lang: en
 ---
 
-Route for serving static assets like .js and .css files. If you are using a CDN, be sure to configure the `assetPath` option in the [webpage](/docs/router/webpage.html) route.
+Route for serving static assets like .js and .css files. If you are using a CDN, be sure to configure the `assetPath` option in the [webpage](/docs/router/webpage.html) route. 
 
 Because the asset paths are [fingerprinted](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#invalidating-and-updating-cached-responses) by the webpage middleware, very aggressive cache headers should be set. Everytime a new version is deployed, the asset paths will be modified, so there's no concern about the browser holding on to a stale version in its cache.
 

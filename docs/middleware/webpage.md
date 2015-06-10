@@ -6,20 +6,20 @@ submenu: router
 lang: en
 ---
 
-Middleware route for serving HTML web pages. Multiple instances can be declared to match different path patterns with varying options. Assumes extension-less URLs. Can be configured to redirect `.html`, trailing slash, and non-lowercase URLs to their canonical lowercase extension-less equivalents.
+Middleware route for serving web pages. Multiple instances can be declared to match different path patterns with varying options. Works both for html pages as well as meta-pages like sitemap.xml or robots.txt. Assumes extension-less URLs. Can be configured to redirect `.html`, trailing slash, and non-lowercase URLs to their canonical lowercase extension-less equivalents.
 
-4front comes bundled with [htmlprep](https://github.com/4front/htmlprep), a super fast, lightweight HTML post-preprocessor that can perform a number of lightweight transforms such as injecting blocks of HTML at prescribed positions and rewriting asset URLs on the fly to point to a CDN. The reason for a run-time post-processor is to allow for dynamic variation of the page based on the current user or other variables. But it's not intended as a full blown server templating engine.d
+4front comes bundled with [htmlprep](https://github.com/4front/htmlprep), a super fast, lightweight HTML post-preprocessor that can perform a number of basic transforms such as injecting blocks of HTML at prescribed positions and rewriting asset URLs on the fly to point to a CDN. The reason for a run-time post-processor is to allow for dynamic variation of the page based on the current user or other variables.
 
-#### Configuration
+### Configuration
 ~~~js
 {
-    "module": "html-page",
+    "module": "webpage",
     "path": "/*",
     "options": {}
 }
 ~~~
 
-#### Authentication Sample
+### Authentication Sample
 A common scenario is to have a site where some pages require authentication and others do not. With 4front, it's as easy as declaring two different webpage entries in the virtual app router array.
 
 The order in which entries appear is critical:
@@ -33,7 +33,7 @@ The order in which entries appear is critical:
 {
 	"module": "express-session",
 	"options": {
-		"secret": "${EXPRESS_SESSION_SECRET}"
+		"secret": "env:EXPRESS_SESSION_SECRET"
 	}
 },
 {
@@ -55,31 +55,35 @@ The order in which entries appear is critical:
 
 ~~~
 
-#### Options
+### Options
 
-__`defaultPage`__
+####`defaultPage`
 
 Defaults to `"index.html"`
 
 The name of the .html page to return for requests to the root of the site, `appname.apphost.com/`.
 
-__`cacheControl`__
+####`cacheControl`
 
 Defaults to `"no-cache"`.
 
 Value to return as the [Cache-Control](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=en#cache-control) header.
 
-__`maxAge`__
+####`maxAge`
 
 Shorthand equivalent to setting `cacheControl` option to `max-age=X`.
 
-__`auth`__
+####`contentType`
+
+The value to return in the `Content-Type` header. Defaults to `text/html`.
+
+####`auth`
 
 Default is `false`.
 
 Boolean indicating if the user must be authorized to access this URL.
 
-__`noAuthPage`__
+####`noAuthPage`
 
 The name of the page to render if `auth` is true but `req.ext.isAuthenticated` is not true.
 
@@ -87,11 +91,11 @@ The name of the page to render if `auth` is true but `req.ext.isAuthenticated` i
 Because the URL doesn't actually change with this option, be sure to to leave the `maxAge` option to the default value of `no-cache`.
 </div>
 
-__`noAuthUrl`__
+####`noAuthUrl`
 
 Rather than rendering the `noAuthPage`, redirect to this URL when the user is not authenticated.
 
-__`assetPath`__
+####`assetPath`
 
 Defaults to `"/static"`.
 
@@ -137,19 +141,19 @@ Note that only assets with relative paths in the HTML source are impacted by thi
 This functionality requires that the `htmlprep` option __not__ be set to `false`.
 </div>
 
-__`pushState`__
+####`pushState`
 
 Boolean indicating if [HTML5 pushState](http://www.staticapps.org/articles/routing-urls-in-static-apps) is enabled on the server. If `true`, route all requests without a file extension to the value of the `defaultPage` option. If pushState is enabled, then no 404 errors will be returned for extension-less URLs. 404 pages would need to be handled by the client JavaScript framework.
 
-__`htmlprep`__
+####`htmlprep`
 
 Default is `true`.
 
 Boolean indicating if the page should be piped through the [htmlprep](https://github.com/4front/htmlprep) pre-processor before being piped on to the http response. If set to an object, it is passed as the options to htmlprep.
 
-__`clientConfigVar`__
+####`clientConfigVar`
 
-Defaults to `"__config__"`.
+Defaults to `"__4front__"`.
 
 The name of the global variable that is injected into the `<head>` of the page exposing a virtual app config data to client script. Has no effect if `htmlprep` is set to `false`.
 
@@ -164,3 +168,5 @@ The html-page appends several custom HTTP headers to the response:
 * __virtual-app-page__
 
 Additionally the `Content-Type` is automatically set to `"text/html"`.
+
+### Non-Html pages
