@@ -52,4 +52,15 @@
 	<li>
 		<a href="motivation.html" {% if page.name == 'motivation.md' %}class="active"{% endif %}>Motivation</a>
 	</li>
+
+	<li>
+		<a href="/docs/recipes/index.html" {% if page.submenu == 'recipes' %}class="active"{% endif %}>Recipes</a>
+		{% if page.submenu == 'recipes' %}
+		<ul>
+			<li>
+				<a href="/docs/recipes/jekyll-sites.html" {% if page.name == 'jekyll-sites.md' %}class="active"{% endif %}>Jekyll Sites</a>
+			</li>
+		</ul>
+		{% endif %}
+	</li>
 </ul>
