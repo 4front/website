@@ -6,14 +6,14 @@ submenu: router
 lang: en
 ---
 
-Middleware route for serving HTML web pages. Multiple instances can be declared to match different path patterns with varying options. Assumes extension-less URLs. Can be configured to redirect `.html`, trailing slash, and non-lowercase URLs to their canonical lowercase extension-less equivalents.
+Middleware route for serving HTML web pages. Multiple instances can be declared to match different path patterns with varying options. Assumes extension-less URLs. Can be configured to redirect `.html`, trailing slash, and non-lowercase URLs to their canonical lowercase, extension-less equivalents.
 
-4front comes bundled with [htmlprep](https://github.com/4front/htmlprep), a super fast, lightweight HTML post-preprocessor that can perform a number of lightweight transforms such as injecting blocks of HTML at prescribed positions and rewriting asset URLs on the fly to point to a CDN. The reason for a run-time post-processor is to allow for dynamic variation of the page based on the current user or other variables. But it's not intended as a full blown server templating engine.d
+4front comes bundled with [htmlprep](https://github.com/4front/htmlprep), a super fast, lightweight HTML post-preprocessor that can perform a number of transforms such as injecting blocks of HTML at prescribed positions and rewriting asset URLs on the fly to point to a CDN. The reason for a run-time post-processor is to allow for dynamic variation of the page based on the current user or other variables. But it's not intended as a full blown server templating engine.d
 
 #### Configuration
 ~~~js
 {
-    "module": "html-page",
+    "module": "webpage",
     "path": "/*",
     "options": {}
 }

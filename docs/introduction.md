@@ -32,7 +32,15 @@ The API provides REST endpoints for programmatically managing all aspects of the
 
 ## CLI
 
-Command line interface that wraps access to the API.
+Command line interface that wraps access to the API. Let's you do stuff like:
+
+~~~sh
+$ 4front create-app
+$ 4front dev
+$ 4front set-env --key SOME_API_KEY --value 324l5kjk34thj
+~~~
+
+[Learn more](/docs/cli)
 
 ## Portal
 
