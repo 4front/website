@@ -22,21 +22,21 @@ module.exports = function(options) {
 ## Router Setup
 Rather than defining routes in JavaScript code, with 4front, you instead declare them with JSON in the package.json file. Here's what the basic structure looks like:
 
-~~~json
+~~~js
 {
 	"_virtualApp": {
- 		"router": [
- 			{
- 				"module": "addon-name",
- 				"path": "/path-to-mount",
- 				"method: "get",
- 				"options": {
- 					"option1": "some_value",
+		"router": [
+			{
+	 			"module": "addon-name",
+	 			"path": "/path-to-mount",
+	 			"method: "get",
+	 			"options": {
+		 			"option1": "some_value",
 					"option2": "env:SOME_ENV_VAR"
- 				}
- 			}
- 		]
- 	}
+		 		}
+	 		}
+	 	]
+	}
 }
 ~~~
 
@@ -64,9 +64,35 @@ Through composition of different router stacks, it's possible to run everything 
 ## Default Router
 If there is no package.json file or the router array is empty, the virtual app will automatically be configured with an instance of the [webpage add-on](/docs/addons/webpage.html). Out of the box, this middleware provides basic static hosting of web assets, i.e. html, js, css, etc. However it can be configured to do much more including auth checks, HTML5 pushState, and more. If no router configuration is provided in the package.json, the app is automatically configured for basic static hosting.
 
+## Environment Variables
+Oftentimes it is desirable to not hardcode add-on option values in package.json that will be committed to source control. For example the [express-request-proxy](/docs/addons/express-request-proxy.html) uses options for configuring things like API keys. For these scenarios 4front supports environment variables that are specified in place of the actual values. The convention is to prefix the value with `"env:"`.
 
-## Available Middleware Add-Ons
+~~~json
+{
+	"router": [
+		{
+ 			"module": "addon-name",
+ 			"path": "/path-to-mount",
+ 			"method: "get",
+ 			"options": {
+				"sensitiveValue": "env:SENSITIVE_VALUE"
+	 		}
+ 		}
+ 	]
+}
+~~~
 
+### Setting Environment Variables
+Environment variables are set via the CLI with the `set-env` command:
+
+~~~sh
+$ 4front set-env --key SENSITIVE_KEY --value "some_sensitive_value"
+~~~
+
+The environment variable value can also differ between virtual environments, i.e. Test, Production, Dev, etc. See the [CLI docs](/docs/cli.html#set-env) for more details.
+
+
+## Built-In Add-Ons
 4front comes packaged with a small set of built-in add-ons that provide a full-featured static hosting solution.
 
 * [webpage](/docs/addons/webpage)
@@ -75,7 +101,7 @@ If there is no package.json file or the router array is empty, the virtual app w
 * [logout](/docs/addons/logout.html)
 * [client-config](/docs/addons/logout.html)
 
-### 3rd Party Add-ons
+## 3rd Party Add-ons
 These middleware modules have been explicitly tested with the 4front virtual router:
 
 * [express-request-proxy](/docs/addons/express-request-proxy.html)
