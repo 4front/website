@@ -1,7 +1,7 @@
 ---
 layout: docs
-title: traffic-control
+title: custom-errors
 menu: docs
-submenu: router
+submenu: addons
 lang: en
 ---

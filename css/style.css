@@ -244,7 +244,8 @@ header {
 p code, td code {
   color: #333;
   background-color: rgba(0,0,0,0.04);
-  padding: 0.2em;
+  padding: 1px;
+  border: 1px solid #ccc;
   /*padding-top: 0.2em;
   padding-bottom: 0.2em;*/
   border-radius: 3px;
@@ -265,6 +266,7 @@ pre {
   line-height: 1.4;
   padding: 16px;
   border-radius: 3px;
+  border: 1px solid #ccc;
   overflow: scroll;
 }
 
@@ -434,8 +436,8 @@ html[xmlns] .clearfix {
 /* doc boxes */
 
 .doc-box {
-  font-size: 13px;
-  line-height: 14px;
+  /*font-size: 13px;
+  line-height: 14px;*/
   padding: 10px 3% 10px 3%;
   border-radius: 3px;
   margin: 20px 0 20px 0;

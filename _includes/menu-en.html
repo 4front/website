@@ -19,35 +19,32 @@
 		<a href="/docs/cli.html" {% if page.name == 'cli.md' %}class="active"{% endif %}>CLI</a>
 	</li>
 	<li>
-		<a href="/docs/middleware.html" {% if page.name == 'middleware.md' %}class="active"{% endif %}>Middleware</a>
+		<a href="/docs/addons.html" {% if page.name == 'addons.md' %}class="active"{% endif %}>Add-Ons</a>
+		{% if page.submenu == 'addons' %}
+		<ul>
+			<li>
+				<a href="/docs/addons/webpage.html" {% if page.name == 'webpage.md' %}class="active"{% endif %}>webpage</a>
+			</li>
+			<li>
+				<a href="/docs/addons/custom-errors.html" {% if page.name == 'custom-errors.md' %}class="active"{% endif %}>custom-errors</a>
+			</li>
+			<li>
+				<a href="/docs/addons/express-request-proxy.html" {% if page.name == 'express-request-proxy.md' %}class="active"{% endif %}>express-request-proxy</a>
+			</li>
+		</ul>
+		{% endif %}
 	</li>
 	<li>
 		<a href="/docs/env-vars.html" {% if page.name == 'env-vars.md' %}class="active"{% endif %}>Env Variables</a>
 	</li>
 	<li>
 		<a href="/docs/app-manifest.html" {% if page.submenu == 'app-manifest' %}class="active"{% endif %}>App Manifest</a>
-		{% if page.submenu == 'router' %}
-		<ul>
-			<li>
-				<a href="/docs/router/html-page.html" {% if page.name == 'html-page.md' %}class="active"{% endif %}>html-page</a>
-			</li>
-			<li>
-				<a href="/docs/router/static-asset.html" {% if page.name == 'static-asset.md' %}class="active"{% endif %}>static-asset</a>
-			</li>
-			<li>
-				<a href="/docs/router/traffic-control.html" {% if page.name == 'traffic-control.md' %}class="active"{% endif %}>traffic-control</a>
-			</li>
-		</ul>
-		{% endif %}
-	</li>
-	<li>
-		<a href="/docs/app-manifest.html" {% if page.name == 'app-manifest.md' %}class="active"{% endif %}>App Manifest</a>
 	</li>
 	<li>
 		<a href="/docs/dev-sandbox.html" {% if page.name == 'dev-sandbox.md' %}class="active"{% endif %}>Dev Sandbox</a>
 	</li>
 	<li>
-		<a href="/docs/addons.html" {% if page.name == 'addons.md' %}class="active"{% endif %}>Add-ons</a>
+		<a href="/docs/api.html" {% if page.name == 'api.md' %}class="active"{% endif %}>API</a>
 	</li>
 	<li>
 		<a href="/docs/motivation.html" {% if page.name == 'motivation.md' %}class="active"{% endif %}>Motivation</a>
