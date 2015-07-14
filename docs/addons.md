@@ -96,6 +96,7 @@ The environment variable value can also differ between virtual environments, i.e
 4front comes packaged with a small set of built-in add-ons that provide a full-featured static hosting solution.
 
 * [webpage](/docs/addons/webpage)
+* [authorized](/docs/addons/authorized.html)
 * [redirects](/docs/addons/redirects.html)
 * [custom-errors](/docs/addons/custom-errors.html)
 * [logout](/docs/addons/logout.html)
