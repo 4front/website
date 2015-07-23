@@ -7,7 +7,7 @@
 		{% if page.submenu == 'install' %}
 		<ul>
 			<li>
-				<a href="/docs/install/local-install.html" {% if page.name == 'local-install.md' %}class="active"{% endif %}>Local OSX Install</a>
+				<a href="/docs/install/local.html" {% if page.name == 'local.md' %}class="active"{% endif %}>Local OSX Install</a>
 			</li>
 			<li>
 				<a href="/docs/install/aws.html" {% if page.name == 'aws.md' %}class="active"{% endif %}>Installing on AWS</a>
@@ -19,20 +19,20 @@
 		<a href="/docs/cli.html" {% if page.name == 'cli.md' %}class="active"{% endif %}>CLI</a>
 	</li>
 	<li>
-		<a href="/docs/addons.html" {% if page.name == 'addons.md' %}class="active"{% endif %}>Add-Ons</a>
-		{% if page.submenu == 'addons' %}
+		<a href="/docs/plugins.html" {% if page.name == 'plugins.md' %}class="active"{% endif %}>Plugins</a>
+		{% if page.submenu == 'plugins' %}
 		<ul>
 			<li>
-				<a href="/docs/addons/webpage.html" {% if page.name == 'webpage.md' %}class="active"{% endif %}>webpage</a>
+				<a href="/docs/plugins/webpage.html" {% if page.name == 'webpage.md' %}class="active"{% endif %}>webpage</a>
 			</li>
 			<li>
-				<a href="/docs/addons/authorized.html" {% if page.name == 'authorized.md' %}class="active"{% endif %}>authorized</a>
+				<a href="/docs/plugins/authorized.html" {% if page.name == 'authorized.md' %}class="active"{% endif %}>authorized</a>
 			</li>
 			<li>
-				<a href="/docs/addons/custom-errors.html" {% if page.name == 'custom-errors.md' %}class="active"{% endif %}>custom-errors</a>
+				<a href="/docs/plugins/custom-errors.html" {% if page.name == 'custom-errors.md' %}class="active"{% endif %}>custom-errors</a>
 			</li>
 			<li>
-				<a href="/docs/addons/express-request-proxy.html" {% if page.name == 'express-request-proxy.md' %}class="active"{% endif %}>express-request-proxy</a>
+				<a href="/docs/plugins/express-request-proxy.html" {% if page.name == 'express-request-proxy.md' %}class="active"{% endif %}>express-request-proxy</a>
 			</li>
 		</ul>
 		{% endif %}

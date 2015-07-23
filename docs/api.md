@@ -37,10 +37,10 @@ The token is good for 30 minutes or whatever the value of the `FF_JWT_TOKEN_EXPI
 ~~~sh
 $ curl -H "X-Access-Token: <jwt_token>" https://your4fronthost.com/api/profile
 ~~~
-
+<!--
 ## Operations
 * [Applications](/docs/api/applications.html)
 * [Organizations](/docs/api/organizations.html)
 * [Versions](/docs/api/versions.html)
 * [Profile](/docs/api/profile.html)
-* [Environment Variables](/docs/api/env-vars.html)
+* [Environment Variables](/docs/api/env-vars.html) -->

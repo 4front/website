@@ -2,7 +2,7 @@
 layout: docs
 title: express-request-proxy
 menu: docs
-submenu: addons
+submenu: plugins
 lang: en
 ---
 

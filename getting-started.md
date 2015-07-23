@@ -13,7 +13,7 @@ lang: en
 $ npm install -g 4front-cli
 ~~~
 
-Choose a 4front instance to connect to. You can use a public hosted instance such as aerobatic.io, or your own private instance - either a [local developer instance](/docs/install/local-osx.html) on OSX, or on [your AWS account](/docs/install/aws.html).
+Choose a 4front instance to connect to. You can use a public hosted instance such as aerobatic.io, or your own private instance - either a [local developer instance](/docs/install/local.html) on OSX, or on [your AWS account](/docs/install/aws.html).
 
 Add a new profile to the CLI corresponding to the 4front instance you will be deploying to. Here we are using [aerobatic.io](https://aerobatic.io), but the steps are the same for a private instance.
 
@@ -53,4 +53,4 @@ $ 4front deploy
 Your app is now live at `http://appname.aerobatic.io`.
 
 ### Next steps
-[Learn to use middleware](/docs/middleware.html)
+[Learn to use plugins](/docs/plugins.html)

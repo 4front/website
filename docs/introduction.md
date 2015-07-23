@@ -15,7 +15,7 @@ The 4front platform is comprised of 4 major components (naturally):
 ## Virtual App Host
 At the core of 4front is a virtual app host acting as the multi-tenant container. Execution of the HTTP request is passed through a pipeline of dynamically composed Express middleware based on the unique configuration of the virtual app. Through the power of server-side middleware, 4front enables front-end developers to build more secure, robust, and full-featured apps than otherwise possible with just pure client code.
 
-[Learn about virtual apps](/docs/virtual-apps.html)
+<!-- [Learn about virtual apps](/docs/virtual-apps.html) -->
 
 ## API
 The API provides REST endpoints for programmatically managing all aspects of the platform including:
@@ -30,6 +30,8 @@ The API provides REST endpoints for programmatically managing all aspects of the
 * Registering new users (of the platform)
 * Get usage stats for a virtual app
 
+[Learn more](/docs/api.html)
+
 ## CLI
 
 Command line interface that wraps access to the API. Let's you do stuff like:
@@ -40,7 +42,7 @@ $ 4front dev
 $ 4front set-env --key SOME_API_KEY --value 324l5kjk34thj
 ~~~
 
-[Learn more](/docs/cli)
+[Learn more](/docs/cli.html)
 
 ## Portal
 

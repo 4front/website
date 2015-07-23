@@ -2,7 +2,7 @@
 layout: docs
 title: authorized
 menu: docs
-submenu: addons
+submenu: plugins
 lang: en
 ---
 

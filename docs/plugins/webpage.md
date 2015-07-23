@@ -2,15 +2,15 @@
 layout: docs
 title: webpage
 menu: docs
-submenu: addons
+submenu: plugins
 lang: en
 ---
 
-This is the principal add-on for serving HTML web pages.
+This is the principal plugin for serving HTML web pages.
 
 Generally this add-on is declared at the end of the router array without a `path` property. The webpage module will automatically map the request path to a file with the same path and a `.html` extension. For example if a request is made to `/pages/about` (and the request made it all the way to the webpage middleware), it would look for a deployed file with the path `/pages/about/html`. If the request has a trailing slash, i.e. `/pages/about/`, then it would look for the file `/pages/about/index.html`. Similarly if the request is to the root of the `/` root of the site, `/index.html` is rendered.
 
-If the html file doesn't exist, the middleware will invoke `next` with a 404 `Error` object that will to be handled by error handling middleware, including [custom-errors](/docs/addons/custom-errors) if declared.
+If the html file doesn't exist, the middleware will invoke `next` with a 404 `Error` object that will to be handled by error handling middleware, including [custom-errors](/docs/plugins/custom-errors) if declared.
 
 ### Configuration
 ~~~js
