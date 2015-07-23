@@ -8,6 +8,8 @@ lang: en
 
 This guide walks through the process of getting 4front up and running on a local OSX developer machine. This setup simulates AWS services with [DynamoDB Local](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html) and [Fake S3](https://www.npmjs.com/package/s3rver).
 
+## Installation
+
 ### Virtual App Host
 You'll need to choose a top level hostname that will serve as the URL of your platform. You can choose anything you like so long as it has a `.dev` top level domain. The instructions below assume `4front.dev`. Virtual apps deployed to the platform are accessed via a URL in the form: `appname.4front.dev`.
 
@@ -45,18 +47,31 @@ $ brew install redis
 
 Once again follow the instructions to automatically launch it upon startup with `launchctl`.
 
-## Installation
+### 4front Platform
 Clone the [4front/aws-platform](https://github.com/4front/aws-platform) repo:
 
 ~~~sh
 $ git clone https://github.com/4front/aws-platform.git 4front
 ~~~
 
+Now `cd` into the 4front directory we just cloned into and install the dependencies:
+
+~~~sh
+$ cd 4front
+$ npm install
+~~~
+
+Finally run this script to create the local DynamoDB tables:
+
+~~~sh
+$ node ./node_modules/4front-dynamodb/scripts/create-local-tables.js
+~~~
+
 <a id="starting-4front-platform"></a>
 
-### Starting the 4front Platform
+## Starting the 4front Platform
 
-Now you are ready to fire up the server; `cd` into the new 4front directory and run:
+Now you are ready to fire up the server:
 
 ~~~sh
 $ npm start
@@ -68,7 +83,7 @@ You should be able to load the 4front portal in your browser:
 
 Since this is a local test installation, you can login with any username and the password "4front". A real deployment on AWS would be configured to use a proper identity provider such as LDAP.
 
-### Install the CLI
+## Install the CLI
 
 ~~~sh
 $ npm install -g 4front/cli
@@ -86,13 +101,15 @@ Now login to the CLI. Your username is whatever you like and your password is "4
 $ 4front login
 ~~~
 
-Now create an initial organization for you apps to live:
+## Deploy Your First App
+
+First create an initial organization for you apps to live:
 
 ~~~sh
 $ 4front create-organization --org-name "Demo Org"
 ~~~
 
-Finally go ahead and create your first app!
+Now go ahead and create your first app!
 
 ~~~sh
 $ 4front create-app
