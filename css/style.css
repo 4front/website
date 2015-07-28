@@ -244,7 +244,7 @@ header {
 p code, td code {
   color: #333;
   background-color: rgba(0,0,0,0.04);
-  padding: 1px;
+  padding: 1px 3px;
   border: 1px solid #ccc;
   /*padding-top: 0.2em;
   padding-bottom: 0.2em;*/
