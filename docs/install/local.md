@@ -92,7 +92,7 @@ $ npm install -g 4front/cli
 Setup your local instance as a profile. This will write a credentials file at `~/.4front.json`.
 
 ~~~sh
-$ 4front add-profile --profile-name local --profile-url http://4front.dev
+$ 4front add-profile --profile-name local --endpoint http://4front.dev
 ~~~
 
 Now login to the CLI. Your username is whatever you like and your password is "4front". This will write a JWT token to the credentials file so you don't have to login every time.
