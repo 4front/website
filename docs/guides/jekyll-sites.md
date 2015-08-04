@@ -2,7 +2,7 @@
 layout: docs
 title: Jekyll Sites
 menu: docs
-submenu: recipes
+submenu: guides
 lang: en
 ---
 
