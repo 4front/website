@@ -31,7 +31,7 @@ when in development mode:
 
 You then need to configure a watch task that monitors for changes and invokes the `/autoreload` endpoint on the sandbox server. The easiest way to do this is with [gulp-watch](https://www.npmjs.com/package/gulp-watch) or [grunt-contrib-watch](https://www.npmjs.com/package/grunt-contrib-watch).
 
-Here's an example gulpfile.js:
+Here's an example using Gulp:
 
 __package.json__
 
@@ -68,6 +68,8 @@ gulp.task('watch', function() {
 ~~~
 
 If you have additional build steps to perform, such as compilation of [Sass](http://sass-lang.com/) to css, you would configure it like so:
+
+__gulpfile.js__
 
 ~~~js
 var gulp = require('gulp');
