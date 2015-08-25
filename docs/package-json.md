@@ -29,7 +29,7 @@ Here's the basic structure of a virtual app's package.json. Each property is des
   },
   "_virtualApp": {
     "appId": "243534534",
-    "liveReload": true,
+    "autoReload": true,
     "baseDir": {
       "debug": "build/debug",
       "release": "build/release"
@@ -89,7 +89,7 @@ Specifies a script to run to start watching for changes. If present, the CLI wil
 }
 ~~~
 
-This is often used in conjunction with the `liveReload` option described below to enable a streamlined development workflow where the browser automatically reloads whenever specific files are changed locally. See the [liveReload recipe](/docs/recipes/livereload.html) for details on getting this setup.
+This is often used in conjunction with the `autoReload` option described below to enable a streamlined development workflow where the browser automatically reloads whenever specific files are changed locally. See the [Auto-Reload guide](/docs/guides/autoreload.html) for details on getting this setup.
 
 ### _virtualApp
 
@@ -97,13 +97,9 @@ This is often used in conjunction with the `liveReload` option described below t
 
 The id of the 4front virtual app. This value is set for you automatically as part of the [create-app command](/docs/cli.html#create-app).
 
-####`liveReload`
+####`autoReload`
 
-Specifies if the [liveReload script](http://livereload.com/) should automatically be injected into html pages by the [webpage plugin](/docs/plugins/webpage.html) when developing in [sandbox mode](/docs/developer-sandbox.html). Defaults to `false`. See the [LiveReload recipe](/docs/recipes/livereload.html) for a detailed explanation of getting this configured.
-
-~~~html
-<script src="//localhost:35729"></script>
-~~~
+Specifies if the auto-reload script block should automatically be injected into html pages by the [webpage plugin](/docs/plugins/webpage.html) when developing in [sandbox mode](/docs/developer-sandbox.html). Defaults to `false`. See the [Auto-Reload guide](/docs/guides/autoreload.html) for a detailed explanation of getting this configured.
 
 ###`baseDir`
 
