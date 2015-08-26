@@ -6,7 +6,7 @@ submenu: plugins
 lang: en
 ---
 
-The `authorized` add-on verifies that the current user is authorized to access the requested resource. It depends upon an additional authentication add-on that runs earlier in the middleware pipeline which handles logging the user in and assigning the user object to `req.ext.user`. The add-on can be configured to protect all requests matching a specific path pattern which could be the entire site, or just certain paths, i.e. everything nested beneath
+The `authorized` add-on verifies that the current user is authorized to access the requested resource. It depends upon an additional authentication add-on (such as [4front-ldap-auth](/docs/plugins/ldap-auth.html)) that receives and validates credentials and assigns a user object to `req.ext.user`. The add-on can be configured to protect all requests matching a specific path pattern which could be the entire site, or just certain paths, i.e. everything nested beneath
 `/protected`. It's also possible to further restrict access based on group membership or role privileges.
 
 The add-on differentiates between an authorization failure due to the user not being logged in vs. not having sufficient privileges. If the user is not logged in, either because they went straight to a protected URL without logging in or their session timed out, generally the best course of action is to redirect them to a login page. The add-on provides a `loginUrl` option for this purpose. A `returnUrl` cookie will be set containing the URL of the request so that the authentication add-on can return the user directly to the URL the user was attempting to access upon successful authentication.

@@ -47,3 +47,5 @@ $ 4front set-env --key SOME_API_KEY --value 324l5kjk34thj
 ## Portal
 
 Web based portal with dashboards and GUI administration of access control, policies, etc.
+
+[Learn more](/docs/portal.html)
