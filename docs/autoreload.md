@@ -2,7 +2,6 @@
 layout: docs
 title: Configuring Auto-Reload
 menu: docs
-submenu: guides
 lang: en
 ---
 

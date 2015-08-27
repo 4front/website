@@ -21,7 +21,7 @@ When a web page is requested, the `dev-sandbox` middleware intercepts the reques
 
 In the first redirect to localhost, a hash parameter is passed along representing the contents of the file that 4front has cached. If the CLI determines that the hash of the local version matches the parameter, the file is considered unchanged. In this case the upload step is skipped and immediately performs the second redirect.
 
-While it may sound complex, the experience should feel very natural, particularly when combined with [auto-reload](/docs/guides/autoreload.html).
+While it may sound complex, the experience should feel very natural, particularly when combined with [auto-reload](/docs/autoreload.html).
 
 #### Static Assets
 With static assets such as JavaScripts or stylesheets, no redirect loop is necessary. Instead relative assets paths are rewritten by 4front (using the [htmlprep](https://github.com/4front/htmlprep) module) to point directly to localhost.

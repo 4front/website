@@ -89,7 +89,7 @@ Specifies a script to run to start watching for changes. If present, the CLI wil
 }
 ~~~
 
-This is often used in conjunction with the `autoReload` option described below to enable a streamlined development workflow where the browser automatically reloads whenever specific files are changed locally. See the [Auto-Reload guide](/docs/guides/autoreload.html) for details on getting this setup.
+This is often used in conjunction with the `autoReload` option described below to enable a streamlined development workflow where the browser automatically reloads whenever specific files are changed locally. See the [Auto-Reload guide](/docs/autoreload.html) for details on getting this setup.
 
 ### _virtualApp
 
