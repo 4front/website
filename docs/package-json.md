@@ -101,6 +101,8 @@ The id of the 4front virtual app. This value is set for you automatically as par
 
 Specifies if the auto-reload script block should automatically be injected into html pages by the [webpage plugin](/docs/plugins/webpage.html) when developing in [sandbox mode](/docs/developer-sandbox.html). Defaults to `false`. See the [Auto-Reload guide](/docs/guides/autoreload.html) for a detailed explanation of getting this configured.
 
+<a name="basedir"></a>
+
 ###`baseDir`
 
 This informs the CLI where the root `index.html` of your app resides. For example your `package.json` (where the CLI should be run) is in the root of your repo, but you might choose to structure things such that your `index.html` is in a `src` sub-directory.
