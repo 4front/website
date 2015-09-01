@@ -410,13 +410,14 @@ html[xmlns] .clearfix {
 }
 
 .doctable td, .doctable th, section table td, section table th {
-  padding: 7px;
-  line-height: 120%;
+  padding: 9px;
+  line-height: 145%;
   vertical-align: top;
   border: 1px solid #c6c6c6;
 }
 
 .doctable tr th, section table tr th {
+  text-align: left;
   background-color: #dadada;
   font-size: 110%;
 }
