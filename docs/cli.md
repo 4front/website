@@ -71,10 +71,10 @@ $ 4front create-app --template-url https://github.com/4front/react-starterify/ma
 
 ###`delete-app`
 
-Delete a 4front application. You can either specify the `--appid` option or run the command with no options from the same directory where the `package.json` file for a virtual app lives.
+Delete a 4front application. You can either specify the `--app-id` option or run the command with no options from the same directory where the `package.json` file for a virtual app lives.
 
 ~~~sh
-$ 4front delete-app --appid <appId>
+$ 4front delete-app --app-id <appId>
 ~~~
 
 ###`dev`
