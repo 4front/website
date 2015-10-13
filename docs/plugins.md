@@ -125,6 +125,7 @@ The environment variable value can also differ between virtual environments, i.e
 * [redirects](/docs/plugins/redirects.html)
 * [custom-errors](/docs/plugins/custom-errors.html)
 * [logout](/docs/plugins/logout.html)
+* [basic-auth](/docs/plugins/basic-auth.html)
 * [client-config](/docs/plugins/logout.html)
 
 ## 3rd Party Plugins
