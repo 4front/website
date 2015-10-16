@@ -132,6 +132,7 @@ The environment variable value can also differ between virtual environments, i.e
 These middleware modules have been explicitly tested with the 4front virtual router:
 
 * [express-request-proxy](/docs/plugins/express-request-proxy.html)
+* [lambda-invoker](/docs/plugins/lambda-invoker.html)
 
 ## Custom Plugins
 
