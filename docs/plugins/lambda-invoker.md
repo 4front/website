@@ -106,14 +106,14 @@ exports.handler = function(event, context) {
 
   var router = Router();
 
-  router.get('/widgets/:widgetId', function(req, res, next) {
+  router.get('/widget-api/:widgetId', function(req, res, next) {
     getWidget(req.params.widgetId, function(err, data) {
       if (err) return next(err);
       res.json(data);
     });
   });
 
-  router.post('/widgets', function(req, res, next) {
+  router.post('/widget-api', function(req, res, next) {
     // The body is already parsed as JSON by the plugin before
     // it's passed to the Lambda.
     createWidget(req.body, function(err, data) {
@@ -157,5 +157,5 @@ In the Lambda function it may be necessary to access contextual information abou
 * `user` - the current logged in user, if there is one (for example single sign-in with the [ldap-auth plugin](http://4front.io/docs/plugins/ldap-auth))
 * `env` - an object containing the environment variables specific to the current environment.
 
-### Deploying Lambda 
+### Deploying Lambda
 A good way to automate the deployment of the Lambda function is with a [Gulp](http://gulpjs.com/) and the [node-aws-lambda](https://www.npmjs.com/package/node-aws-lambda) module. This [gist](https://gist.github.com/dvonlehman/2386826351e85fb96163) provides a fully functional gulpfile for deploying a Lambda.
