@@ -25,7 +25,7 @@ $ curl get.pow.cx | sh
 Now create a file in the `~/.pow` directory with a single line corresponding to the port number. This assumes the 4front node app will listen on port 1903 and `4front.dev` is the hostname.
 
 ~~~sh
-$ echo 1903 > ~/.pow/4front.dev
+$ echo 1903 > ~/.pow/4front
 ~~~
 
 ### DynamoDB Local
