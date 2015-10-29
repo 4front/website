@@ -13,12 +13,14 @@ The [express-request-proxy](https://www.npmjs.com/package/express-request-proxy)
 {
   "_virtualApp": {
     "router": [
-      "path": "/api/geocode",
-      "module": "express-request-proxy",
-      "options": {
-        "url": "https://maps.googleapis.com/maps/api/geocode/json",
-        "query": {
-          "key": "env:GOOGLE_API_KEY"
+      {
+        "path": "/api/geocode",
+        "module": "express-request-proxy",
+        "options": {
+          "url": "https://maps.googleapis.com/maps/api/geocode/json",
+          "query": {
+            "key": "env:GOOGLE_API_KEY"
+          }
         }
       }
     ]
